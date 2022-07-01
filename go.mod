@@ -3,9 +3,12 @@ module github.com/Random7/go-mc-rcon
 go 1.18
 
 require (
-	github.com/Kelwing/mc-rcon v0.0.0-20220214194105-bec8dcbccc3f // indirect
+	github.com/Kelwing/mc-rcon v0.0.0-20220214194105-bec8dcbccc3f
+	github.com/gin-gonic/gin v1.8.1
+)
+
+require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.8.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
