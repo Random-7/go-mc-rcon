@@ -1,4 +1,4 @@
-package rcon
+package main
 
 import (
 	"log"
