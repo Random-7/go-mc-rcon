@@ -1,2 +1,5 @@
-# go-mc-rcon-
+# go-mc-rcon
 Go Web app for Minecraft RCON
+
+# Packages used:
+
