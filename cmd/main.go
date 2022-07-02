@@ -1,30 +1,41 @@
 package main
 
 import (
-	"log"
-
-	"github.com/Random7/go-mc-rcon/pkg/logger"
-	"github.com/Random7/go-mc-rcon/pkg/models"
-
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"fmt"
+	"html/template"
+	"net/http"
 )
 
-func main() {
-	dsn := "go-mc-rcon:Fingas@1437@tcp(10.0.10.5:3306)/go-mc-rcon?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+func Home(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "home.page.html")
+}
 
+func About(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, "about.page.html")
+}
+
+func renderTemplate(w http.ResponseWriter, tmpl string) {
+	parsedTemplate, _ := template.ParseFiles("./templates/" + tmpl)
+	err := parsedTemplate.Execute(w, nil)
 	if err != nil {
-		log.Fatalln("Error: " + err.Error())
+		fmt.Println("error parsing template:", err)
 	}
 
-	logger.PrintMessage("connected to: " + db.Name())
+}
 
-	db.AutoMigrate(&models.MCServer{})
-	db.Create(&models.MCServer{Name: "SamePlanLessDying", Address: "10.0.50.50", Port: "25565", RconPort: "25575", RconPassword: "spldmcrcon2022"})
+func main() {
 
-	var server models.MCServer
-	db.First(&server, 1)
-	logger.PrintMessage(server.Address)
+	http.HandleFunc("/", Home)
+	http.HandleFunc("/about", About)
+
+	http.ListenAndServe(":8080", nil)
 
 }
+
+// rcon.SendCommand("list")
+// rcon.SendCommand("tps")
+// rcon.SendCommand("seed")
+
+// connectionInfo := new(database.DbConnection)
+// connectionInfo.Dsn = "go-mc-rcon:Fingas@1437@tcp(10.0.10.5:3306)/go-mc-rcon?charset=utf8mb4&parseTime=True&loc=Local"
+// database.Connect(*connectionInfo)
